@@ -40,5 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# large media files — serve locally, host on Vimeo/YouTube for production
-public/canary-video.mp4
+# temp conversion scripts
+convert-logos.mjs

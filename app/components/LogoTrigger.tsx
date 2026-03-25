@@ -57,17 +57,13 @@ export default function LogoTrigger() {
           e.currentTarget.style.transform = 'scale(0.93)'
         }}
       >
-        {/* Plain <img> — NOT next/image. Required for mix-blend-mode to work
-            reliably. next/image's wrapper span creates a stacking context that
-            breaks mix-blend-mode across browsers. Replace when transparent-bg
-            SVG asset is available. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/canary-logo.png"
+          src="/canary-bug.png"
           alt=""
-          width={160}
-          height={68}
-          style={{ display: 'block', mixBlendMode: 'multiply' }}
+          width={200}
+          height={82}
+          style={{ display: 'block' }}
           draggable={false}
         />
       </button>

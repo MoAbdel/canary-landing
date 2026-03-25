@@ -102,12 +102,6 @@ export default function VideoModal({ onClose }: VideoModalProps) {
           ✕
         </button>
 
-        {/*
-          ⚠️ DEPLOYMENT GATE: Replace before sharing publicly.
-          Current: 26MB MP4 served from /public — no streaming, poor mobile performance.
-          Required: Host final cut on Vimeo or YouTube and replace <video> with <iframe>.
-          See docs/superpowers/specs/2026-03-25-canary-landing-page-design.md for details.
-        */}
         <div className="w-full bg-black" style={{ aspectRatio: '16 / 9' }}>
           <video
             ref={videoRef}

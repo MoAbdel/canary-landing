@@ -7,12 +7,17 @@ export default function Home() {
       {/* Yellow field — flex column, fills all space above bottom bar */}
       <div className="flex flex-col flex-1 items-center overflow-hidden">
 
-        {/* CANARY headline — top-anchored, full width */}
-        <h1
-          className="font-display text-ink text-center w-full leading-none select-none"
-          style={{ fontSize: 'clamp(72px, 14vw, 160px)', paddingTop: '4%' }}
-        >
-          CANARY
+        {/* CANARY wordmark — top-anchored, full width */}
+        <h1 className="flex justify-center select-none" style={{ paddingTop: '4%', width: '100%' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/canary-wordmark.png"
+            alt="CANARY"
+            width={2400}
+            height={347}
+            style={{ width: 'min(88%, 1100px)', height: 'auto', display: 'block' }}
+            draggable={false}
+          />
         </h1>
 
         {/* SYSTEMS + OBJECTS — vertically centered in remaining space */}
