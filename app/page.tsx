@@ -8,7 +8,7 @@ export default function Home() {
       <div className="flex flex-col flex-1 items-center overflow-hidden">
 
         {/* CANARY wordmark — top-anchored, full width */}
-        <h1 className="flex justify-center select-none" style={{ paddingTop: '4%', width: '100%' }}>
+        <h1 className="flex justify-center select-none" style={{ paddingTop: '10%', width: '100%' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/canary-wordmark.png"
@@ -31,7 +31,7 @@ export default function Home() {
         </div>
 
         {/* Logo trigger — bottom of yellow field */}
-        <div className="flex flex-col items-center" style={{ paddingBottom: '6%' }}>
+        <div className="flex flex-col items-center" style={{ paddingBottom: '12%' }}>
           <span
             className="font-mono text-ink/35 uppercase tracking-[0.2em] mb-2"
             style={{ fontSize: '9px' }}
