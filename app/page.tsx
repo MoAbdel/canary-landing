@@ -32,14 +32,7 @@ export default function Home() {
 
         {/* Logo trigger — bottom of yellow field */}
         <div className="flex flex-col items-center" style={{ paddingBottom: '12%' }}>
-          <span
-            className="font-mono text-ink/35 uppercase tracking-[0.2em] mb-2"
-            style={{ fontSize: '9px' }}
-            aria-hidden="true"
-          >
-            CLICK TO WATCH
-          </span>
-          <LogoTrigger />
+<LogoTrigger />
         </div>
 
       </div>
