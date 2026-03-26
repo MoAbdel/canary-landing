@@ -1,61 +1,66 @@
 'use client'
 
-import { useState, useCallback, useRef } from 'react'
-
-// VideoModal is dynamically imported on first click only (facade pattern)
-let VideoModalModule: typeof import('./VideoModal') | null = null
+import { useState, useRef, useCallback, useEffect } from 'react'
 
 export default function LogoTrigger() {
-  const [modalOpen, setModalOpen] = useState(false)
-  const [ModalComponent, setModalComponent] = useState<React.ComponentType<{ onClose: () => void }> | null>(null)
+  const [playing, setPlaying] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
 
-  const handleClick = useCallback(async () => {
-    // Load the modal component on first click only
-    if (!VideoModalModule) {
-      VideoModalModule = await import('./VideoModal')
-    }
-    setModalComponent(() => VideoModalModule!.default)
-    setModalOpen(true)
+  const handlePlay = useCallback(() => {
+    setPlaying(true)
+    setTimeout(() => {
+      videoRef.current?.play().catch(() => {})
+      closeRef.current?.focus()
+    }, 350)
   }, [])
 
   const handleClose = useCallback(() => {
-    setModalOpen(false)
-    // Return focus to the logo trigger
-    buttonRef.current?.focus()
+    if (videoRef.current) {
+      videoRef.current.pause()
+      videoRef.current.currentTime = 0
+    }
+    setPlaying(false)
+    setTimeout(() => buttonRef.current?.focus(), 350)
   }, [])
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape' && playing) handleClose() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [playing, handleClose])
 
   return (
     <>
+      {/* Logo button — fades out when playing */}
       <button
         ref={buttonRef}
-        onClick={handleClick}
+        onClick={handlePlay}
         aria-label="Watch the Canary film"
-        className="border-0 bg-transparent p-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-canary"
+        className="border-0 bg-transparent p-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-4"
         style={{
-          transition: 'transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.18s ease',
-          minWidth: 48,
-          minHeight: 48,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          minWidth: 48,
+          minHeight: 48,
+          transition: 'opacity 0.35s ease, transform 0.35s ease',
+          opacity: playing ? 0 : 1,
+          transform: playing ? 'scale(0.75)' : 'scale(1)',
+          pointerEvents: playing ? 'none' : 'auto',
         }}
         onMouseEnter={e => {
-          const el = e.currentTarget
-          el.style.transform = 'scale(0.93)'
-          el.style.filter = 'drop-shadow(0 6px 16px rgba(0,0,0,0.35))'
+          if (playing) return
+          e.currentTarget.style.transform = 'scale(0.93)'
+          e.currentTarget.style.filter = 'drop-shadow(0 6px 16px rgba(0,0,0,0.2))'
         }}
         onMouseLeave={e => {
-          const el = e.currentTarget
-          el.style.transform = 'scale(1)'
-          el.style.filter = 'none'
+          e.currentTarget.style.transform = 'scale(1)'
+          e.currentTarget.style.filter = 'none'
         }}
-        onMouseDown={e => {
-          e.currentTarget.style.transform = 'scale(0.88)'
-        }}
-        onMouseUp={e => {
-          e.currentTarget.style.transform = 'scale(0.93)'
-        }}
+        onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.88)' }}
+        onMouseUp={e => { e.currentTarget.style.transform = 'scale(0.93)' }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -68,9 +73,62 @@ export default function LogoTrigger() {
         />
       </button>
 
-      {modalOpen && ModalComponent && (
-        <ModalComponent onClose={handleClose} />
-      )}
+      {/* Inline video — fades in over white background */}
+      <div
+        style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'opacity 0.35s ease',
+          opacity: playing ? 1 : 0,
+          pointerEvents: playing ? 'auto' : 'none',
+          zIndex: 50,
+        }}
+      >
+        {/* Close button */}
+        <button
+          ref={closeRef}
+          onClick={handleClose}
+          aria-label="Close"
+          style={{
+            position: 'absolute',
+            top: 20,
+            right: 24,
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: 22,
+            color: '#111',
+            lineHeight: 1,
+            padding: 8,
+            opacity: 0.4,
+          }}
+          onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = '0.4' }}
+        >
+          ✕
+        </button>
+
+        {/* Video */}
+        <video
+          ref={videoRef}
+          src="/canary-video.mp4"
+          playsInline
+          controls
+          onEnded={handleClose}
+          style={{
+            width: '90vw',
+            maxWidth: 960,
+            aspectRatio: '16/9',
+            background: '#000',
+            transition: 'transform 0.35s ease',
+            transform: playing ? 'scale(1)' : 'scale(0.96)',
+          }}
+        />
+      </div>
     </>
   )
 }
