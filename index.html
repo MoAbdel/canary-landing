@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Canary — C01 Capsule</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --canary: #FFEF00;
+    --ink: #111111;
+    --ink-60: rgba(17,17,17,0.6);
+    --ink-40: rgba(17,17,17,0.4);
+    --ink-20: rgba(17,17,17,0.2);
+    --ink-10: rgba(17,17,17,0.1);
+    --paper: #F4F1EA;
+    --cream: #E8E2D1;
+    --graphite: #1E1E1E;
+    --signal: #D9CFB2; /* C01 Signal neutral/cream */
+    --recon:  #2B2C2E; /* C01 Recon graphite */
+    --strike: #FF5B1F; /* C01 Strike accent */
+  }
+  * , *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--canary); color: var(--ink); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  body {
+    font-family: 'Space Mono', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; }
+  ::selection { background: var(--ink); color: var(--canary); }
+
+  .font-display { font-family: 'Anton', Impact, sans-serif; font-weight: 400; letter-spacing: 0; }
+  .font-mono { font-family: 'Space Mono', 'Courier New', monospace; }
+  .uppercase { text-transform: uppercase; }
+
+  /* fade/slide-up reveal triggered by IntersectionObserver */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+  [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* striped image placeholder */
+  .placeholder {
+    position: relative;
+    background:
+      repeating-linear-gradient(
+        135deg,
+        rgba(17,17,17,0.08) 0 12px,
+        rgba(17,17,17,0.04) 12px 24px
+      ),
+      color-mix(in srgb, var(--canary) 92%, var(--ink));
+    border: 1px solid var(--ink);
+    color: var(--ink-60);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 12px;
+  }
+  .placeholder::before {
+    content: "";
+    position: absolute; inset: 6px;
+    border: 1px dashed var(--ink-20);
+    pointer-events: none;
+  }
+  .placeholder .ph-label {
+    position: relative; z-index: 1;
+    background: var(--canary);
+    padding: 6px 10px;
+    border: 1px solid var(--ink);
+  }
+
+  /* inverse section (ink bg) */
+  .inverse { background: var(--ink); color: var(--canary); }
+  .inverse ::selection { background: var(--canary); color: var(--ink); }
+  .inverse .placeholder {
+    background:
+      repeating-linear-gradient(
+        135deg,
+        rgba(255,239,0,0.08) 0 12px,
+        rgba(255,239,0,0.03) 12px 24px
+      ),
+      #1A1A1A;
+    border-color: var(--canary);
+    color: rgba(255,239,0,0.6);
+  }
+  .inverse .placeholder::before { border-color: rgba(255,239,0,0.18); }
+  .inverse .placeholder .ph-label { background: var(--ink); color: var(--canary); border-color: var(--canary); }
+
+  /* hairline divider */
+  .hair { height: 1px; background: var(--ink); width: 100%; }
+  .inverse .hair { background: var(--canary); }
+
+  /* util tick */
+  .tick {
+    display: inline-block; width: 6px; height: 6px; background: var(--ink); vertical-align: middle; margin-right: 8px; transform: translateY(-1px);
+  }
+  .inverse .tick { background: var(--canary); }
+
+  /* black bottom bar */
+  .bottom-bar {
+    height: clamp(6px, 1.2vw, 14px);
+    background: var(--ink);
+    width: 100%;
+  }
+
+  /* focus */
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+  .inverse :focus-visible { outline-color: var(--canary); }
+
+  /* ------ Tweaks panel ------ */
+  #tweaks-panel {
+    position: fixed;
+    right: 20px; bottom: 20px;
+    width: 320px;
+    max-width: calc(100vw - 40px);
+    background: var(--ink);
+    color: var(--canary);
+    border: 1px solid var(--canary);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    z-index: 1000;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    display: none;
+    max-height: calc(100vh - 40px);
+    overflow: auto;
+  }
+  #tweaks-panel.open { display: block; }
+  #tweaks-panel header {
+    padding: 12px 14px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--canary);
+    position: sticky; top: 0; background: var(--ink);
+  }
+  #tweaks-panel header h3 {
+    margin: 0; font-family: 'Anton', Impact, sans-serif; font-size: 18px; letter-spacing: 0.04em;
+  }
+  #tweaks-panel .tw-section {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255,239,0,0.25);
+  }
+  #tweaks-panel .tw-section:last-child { border-bottom: 0; }
+  #tweaks-panel label {
+    display: block;
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 6px;
+  }
+  #tweaks-panel input[type="text"],
+  #tweaks-panel input[type="datetime-local"],
+  #tweaks-panel textarea,
+  #tweaks-panel select {
+    width: 100%;
+    background: transparent;
+    color: var(--canary);
+    border: 1px solid var(--canary);
+    padding: 8px 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+  }
+  #tweaks-panel textarea { resize: vertical; min-height: 60px; }
+  #tweaks-panel .tw-row { display: flex; gap: 8px; align-items: center; }
+  #tweaks-panel button.tw-btn {
+    flex: 1;
+    background: transparent;
+    color: var(--canary);
+    border: 1px solid var(--canary);
+    padding: 8px 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  #tweaks-panel button.tw-btn[aria-pressed="true"] {
+    background: var(--canary); color: var(--ink);
+  }
+  #tweaks-panel .tw-close {
+    background: transparent; color: var(--canary); border: 0; cursor: pointer; font-size: 16px;
+  }
+  #tweaks-panel .tw-palette {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
+  }
+  #tweaks-panel .tw-palette button {
+    height: 36px; border: 1px solid var(--canary); cursor: pointer; background: var(--canary);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.15em;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  #tweaks-panel .tw-palette button[aria-pressed="true"] { outline: 2px solid var(--canary); outline-offset: 2px; }
+  #tweaks-panel .tw-order {
+    list-style: none; margin: 0; padding: 0;
+  }
+  #tweaks-panel .tw-order li {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 8px; border: 1px solid rgba(255,239,0,0.4); margin-bottom: 4px; font-size: 11px;
+  }
+  #tweaks-panel .tw-order li .tw-mv { display: flex; gap: 4px; }
+  #tweaks-panel .tw-order button {
+    background: transparent; color: var(--canary); border: 1px solid var(--canary); cursor: pointer;
+    width: 24px; height: 24px; font-size: 12px; line-height: 1;
+  }
+
+  /* make sure no horizontal overflow from large wordmarks */
+  .no-scroll-x { overflow-x: clip; }
+
+</style>
+
+<script type="application/json" id="brand-meta">
+{"name": "Canary", "product": "C01"}
+</script>
+</head>
+<body class="no-scroll-x">
+
+<div id="root"></div>
+
+<!-- Tweaks panel (vanilla, not React, so it persists state via localStorage + drives React via event) -->
+<div id="tweaks-panel" role="dialog" aria-label="Tweaks">
+  <header>
+    <h3>TWEAKS</h3>
+    <button class="tw-close" aria-label="Close Tweaks">✕</button>
+  </header>
+  <div class="tw-section">
+    <label>Direction</label>
+    <div class="tw-row" id="tw-direction">
+      <button class="tw-btn" data-direction="safe">Safe</button>
+      <button class="tw-btn" data-direction="bold">Bold</button>
+    </div>
+  </div>
+  <div class="tw-section">
+    <label>Hero headline</label>
+    <textarea id="tw-headline" rows="2"></textarea>
+  </div>
+  <div class="tw-section">
+    <label>Drop date (TBD if blank)</label>
+    <input type="datetime-local" id="tw-drop-date" />
+    <div style="height:8px"></div>
+    <label>Countdown</label>
+    <div class="tw-row" id="tw-countdown">
+      <button class="tw-btn" data-countdown="off">Off</button>
+      <button class="tw-btn" data-countdown="on">On</button>
+    </div>
+  </div>
+  <div class="tw-section">
+    <label>Palette</label>
+    <div class="tw-palette" id="tw-palette">
+      <button data-palette="canary" style="background:#FFEF00;color:#111">Canary</button>
+      <button data-palette="white"  style="background:#FFFFFF;color:#111;border:1px solid #FFEF00">White</button>
+      <button data-palette="recon"  style="background:#2B2C2E;color:#FFEF00">Recon</button>
+      <button data-palette="strike" style="background:#FF5B1F;color:#111">Strike</button>
+    </div>
+  </div>
+  <div class="tw-section">
+    <label>Section order</label>
+    <ul class="tw-order" id="tw-order"></ul>
+  </div>
+</div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script src="./src/tweaks-host.js?v=8"></script>
+<script type="text/babel" src="./src/components.jsx"></script>
+<script type="text/babel" src="./src/sections-shared.jsx"></script>
+<script type="text/babel" src="./src/direction-safe.jsx"></script>
+<script type="text/babel" src="./src/direction-bold.jsx"></script>
+<script type="text/babel" src="./src/app.jsx"></script>
+
+</body>
+</html>
