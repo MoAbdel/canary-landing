@@ -155,7 +155,7 @@
 
   // --- palette theming ------------------------------------------------------
   const PALETTES = {
-    canary: { bg: '#FFEF00', fg: '#111111', inverse: false, name: 'Canary' },
+    canary: { bg: '#FFFFFF', fg: '#111111', inverse: false, name: 'Canary' },
     white:  { bg: '#FFFFFF', fg: '#111111', inverse: false, name: 'White' },
     recon:  { bg: '#1E1F22', fg: '#E8E4D6', inverse: true,  name: 'C01 Recon' },
     strike: { bg: '#FF5B1F', fg: '#111111', inverse: false, name: 'C01 Strike' }
