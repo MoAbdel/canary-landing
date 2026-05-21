@@ -20,7 +20,7 @@ The Canary C01 is the first object in the Canary system.
 
 Canary releases capsules in a single time-boxed window. There is no continuous availability — when a capsule sells out, it does not return. Customers join "The Flock" (Canary's notify list) to receive the drop time, product link, and serial range before public release.
 
-- Notify list signup: https://canary.desk/#capture
+- Notify list signup: https://canary.store/#capture
 - Drop status: see homepage hero ("Drop · TBA" or live countdown)
 
 ## Brand positioning
@@ -58,11 +58,11 @@ Drop date is announced to The Flock (the Canary notify list) before public relea
 USD 175 to 225 depending on configuration. Final pricing is confirmed at drop.
 
 **Where can I contact Canary?**
-- General: hello@canary.desk
-- Press: press@canary.desk
+- General: hello@canary.store
+- Press: press@canary.store
 
 ## Links
 
-- Home: https://canary.desk/
-- Notify list: https://canary.desk/#capture
-- Sitemap: https://canary.desk/sitemap.xml
+- Home: https://canary.store/
+- Notify list: https://canary.store/#capture
+- Sitemap: https://canary.store/sitemap.xml

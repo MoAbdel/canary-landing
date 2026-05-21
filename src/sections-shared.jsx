@@ -418,8 +418,8 @@ function Footer() {
         <div>
           <MonoLabel style={{ opacity: 0.55 }}>Contact</MonoLabel>
           <div style={{ marginTop: 10, fontSize: 13, lineHeight: 1.8 }}>
-            <a href="mailto:hello@canary.desk">hello@canary.desk</a><br />
-            <a href="mailto:press@canary.desk">press@canary.desk</a>
+            <a href="mailto:hello@canary.store">hello@canary.store</a><br />
+            <a href="mailto:press@canary.store">press@canary.store</a>
           </div>
         </div>
         <div>

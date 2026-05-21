@@ -1,4 +1,4 @@
-# Canary — https://canary.desk/
+# Canary — https://canary.store/
 # Allow all major search and AI crawlers; gate print variant.
 
 User-agent: *
@@ -51,4 +51,4 @@ Allow: /
 Disallow: /canary-print.html
 Disallow: /api/
 
-Sitemap: https://canary.desk/sitemap.xml
+Sitemap: https://canary.store/sitemap.xml

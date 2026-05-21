@@ -2,37 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://canary.desk/</loc>
+    <loc>https://canary.store/</loc>
     <lastmod>2026-05-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://canary.desk/assets/keyboards/c01-hero.jpg</image:loc>
+      <image:loc>https://canary.store/assets/keyboards/c01-hero.jpg</image:loc>
       <image:title>Canary C01 — hero shot</image:title>
       <image:caption>Canary C01 mechanical keyboard, top-down product photo.</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://canary.desk/assets/keyboards/c01-angle.jpg</image:loc>
+      <image:loc>https://canary.store/assets/keyboards/c01-angle.jpg</image:loc>
       <image:title>Canary C01 — 3/4 angle</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://canary.desk/assets/keyboards/c01-macro.jpg</image:loc>
+      <image:loc>https://canary.store/assets/keyboards/c01-macro.jpg</image:loc>
       <image:title>Canary C01 — keycap and rotary macro</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://canary.desk/assets/keyboards/c01-side.jpg</image:loc>
+      <image:loc>https://canary.store/assets/keyboards/c01-side.jpg</image:loc>
       <image:title>Canary C01 — side profile, USB-C and mode toggle</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://canary.desk/assets/keyboards/box-signal.jpg</image:loc>
+      <image:loc>https://canary.store/assets/keyboards/box-signal.jpg</image:loc>
       <image:title>Canary C01 Signal — packaging</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://canary.desk/assets/keyboards/box-recon.jpg</image:loc>
+      <image:loc>https://canary.store/assets/keyboards/box-recon.jpg</image:loc>
       <image:title>Canary C01 Recon — packaging</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://canary.desk/assets/keyboards/box-open.jpg</image:loc>
+      <image:loc>https://canary.store/assets/keyboards/box-open.jpg</image:loc>
       <image:title>Canary C01 — opened crate with numbered cloth</image:title>
     </image:image>
   </url>

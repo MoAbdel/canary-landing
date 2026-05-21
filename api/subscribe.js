@@ -13,12 +13,12 @@ const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 function corsHeaders(origin) {
   // Tight allowlist — only the production domain and Vercel preview pattern.
   const allowed = [
-    'https://canary.desk',
-    'https://www.canary.desk',
+    'https://canary.store',
+    'https://www.canary.store',
   ];
   const ok = allowed.includes(origin) || (origin && origin.endsWith('.vercel.app'));
   return {
-    'Access-Control-Allow-Origin': ok ? origin : 'https://canary.desk',
+    'Access-Control-Allow-Origin': ok ? origin : 'https://canary.store',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400',
