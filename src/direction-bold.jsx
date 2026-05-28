@@ -16,9 +16,8 @@ function Ticker({ children }) {
       maskImage: 'linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%)',
       WebkitMaskImage: 'linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%)'
     }}>
-      <div style={{
+      <div className="canary-ticker-track" style={{
         display: 'inline-flex', gap: 40,
-        animation: 'canary-ticker 42s linear infinite',
         paddingLeft: '100%'
       }}>
         {Array.from({ length: 2 }).map((_, k) => (
@@ -27,7 +26,12 @@ function Ticker({ children }) {
           </span>
         ))}
       </div>
-      <style>{`@keyframes canary-ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
+      <style>{`
+        @keyframes canary-ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        @media (prefers-reduced-motion: no-preference) {
+          .canary-ticker-track { animation: canary-ticker 42s linear infinite; }
+        }
+      `}</style>
     </div>
   );
 }
@@ -136,10 +140,15 @@ function HeroBold({ tweaks }) {
                 background: 'var(--ink)', color: 'var(--canary)',
                 fontSize: 11, letterSpacing: '0.22em', gap: 10
               }}>
-                <span style={{ width: 8, height: 8, background: 'var(--canary)', borderRadius: '50%', display: 'inline-block', animation: 'canary-pulse 1.6s ease-in-out infinite' }} />
+                <span className="canary-pulse-dot" style={{ width: 8, height: 8, background: 'var(--canary)', borderRadius: '50%', display: 'inline-block' }} />
                 Join The Flock
               </a>
-              <style>{`@keyframes canary-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }`}</style>
+              <style>{`
+                @keyframes canary-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+                @media (prefers-reduced-motion: no-preference) {
+                  .canary-pulse-dot { animation: canary-pulse 1.6s ease-in-out infinite; }
+                }
+              `}</style>
             </div>
           </Reveal>
         </div>
