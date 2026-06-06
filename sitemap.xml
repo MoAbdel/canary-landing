@@ -3,13 +3,13 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.canary.store/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://www.canary.store/assets/keyboards/c01-hero.jpg</image:loc>
       <image:title>Canary C01 — hero shot</image:title>
-      <image:caption>Canary C01 mechanical keyboard, top-down product photo.</image:caption>
+      <image:caption>Canary C01 65% aluminum mechanical keyboard, top-down product photo.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://www.canary.store/assets/keyboards/c01-angle.jpg</image:loc>
@@ -36,4 +36,19 @@
       <image:title>Canary C01 — opened crate with numbered cloth</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://www.canary.store/learn</loc>
+    <lastmod>2026-06-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.canary.store/learn/what-is-a-65-keyboard</loc>
+    <lastmod>2026-06-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- TODO: add /learn/aluminum-vs-plastic-mechanical-keyboards and
+       /learn/best-keyboard-for-desk-setup once those articles are written
+       (currently noindex scaffolds). -->
 </urlset>

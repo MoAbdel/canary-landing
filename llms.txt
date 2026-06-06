@@ -1,6 +1,6 @@
 # Canary
 
-> Canary is an independent design house building limited-run "instruments for the modern desk." First object: the Canary C01, a 65% die-cast aluminum mechanical keyboard released in numbered capsules.
+> Canary makes limited-run keyboards for people who treat their setup as part of their identity. Hero product: the Canary C01, a 65% die-cast aluminum mechanical keyboard released in numbered capsules.
 
 ## Product: Canary C01 Capsule
 
@@ -26,8 +26,9 @@ Canary releases capsules in a single time-boxed window. There is no continuous a
 ## Brand positioning
 
 - Founded 2026
-- Tagline: "Instruments for the modern desk."
-- Positioning: "Not gaming. Not generic." — design-led mechanical keyboards as desk objects rather than gaming peripherals.
+- Positioning: "Canary makes limited-run keyboards for people who treat their setup as part of their identity."
+- Launch message: "Canary C01 is a limited-run 65% die-cast aluminum mechanical keyboard built to transform your desk, sound premium, and make your setup feel intentional."
+- Audience: setup-culture buyers (clean/cozy/dark-academia/WFH desks, creators) and keyboard enthusiasts who care about materials, sound, switches, and build.
 - Aesthetic peers / reference points: Teenage Engineering (industrial design), Studio Neat (small-batch desk goods), Aesop (typographic restraint).
 
 ## Roadmap
@@ -65,4 +66,9 @@ USD 175 to 225 depending on configuration. Final pricing is confirmed at drop.
 
 - Home: https://www.canary.store/
 - Notify list: https://www.canary.store/#capture
+- Colorways: https://www.canary.store/#colorways
+- Specs: https://www.canary.store/#specs
+- FAQ: https://www.canary.store/#faq
+- Learn hub: https://www.canary.store/learn
+- What is a 65% keyboard: https://www.canary.store/learn/what-is-a-65-keyboard
 - Sitemap: https://www.canary.store/sitemap.xml

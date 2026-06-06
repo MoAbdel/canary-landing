@@ -5,6 +5,8 @@
 // centered-logo pattern.
 
 function HeroSafe({ tweaks }) {
+  const heroCta = (e) => { if (window.canaryTrack) window.canaryTrack('hero_cta_click', { label: 'join_the_flock', location: 'hero' }); };
+  const secondaryCta = (e) => { if (window.canaryTrack) window.canaryTrack('secondary_cta_click', { label: 'explore_capsule_01', location: 'hero' }); };
   return (
     <section style={{
       minHeight: '100vh',
@@ -28,62 +30,105 @@ function HeroSafe({ tweaks }) {
         </div>
       </div>
 
-      {/* Wordmark — anton, giant, vertically centered */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: 'clamp(24px, 4vw, 48px)' }}>
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 'clamp(28px, 5vw, 56px)' }}>
+      {/* Hero content — centered, cinematic */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: 'clamp(28px, 4vw, 56px)' }}>
+        <div style={{
+          flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center',
+          alignItems: 'center', textAlign: 'center', gap: 'clamp(18px, 2.6vw, 30px)',
+          maxWidth: 1040, margin: '0 auto'
+        }}>
           <Reveal>
+            <p className="font-mono uppercase" style={{
+              margin: 0, fontSize: 'clamp(10px, 1.2vw, 12px)', letterSpacing: '0.3em', opacity: 0.7
+            }}>
+              Capsule 01 · 600 Numbered Units · No Restocks
+            </p>
+          </Reveal>
+
+          {/* CANARY wordmark — brand mark + film trigger (not the H1) */}
+          <Reveal delay={60}>
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent('canary:play-film'))}
+              aria-label="Watch the Canary film"
+              className="font-display"
+              style={{
+                background: 'transparent', border: 0, cursor: 'pointer', padding: 0,
+                color: 'var(--ink)',
+                fontSize: 'clamp(52px, 12vw, 168px)', lineHeight: 0.82, letterSpacing: '-0.01em',
+                transition: 'opacity 0.2s ease'
+              }}
+              onMouseEnter={e => { e.currentTarget.style.opacity = '0.62'; }}
+              onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}
+            >
+              CANARY
+              <span className="font-mono uppercase" style={{ display: 'block', fontSize: 9, letterSpacing: '0.28em', opacity: 0.45, marginTop: 10 }}>
+                ▸ Click to watch the film
+              </span>
+            </button>
+          </Reveal>
+
+          <Reveal delay={120}>
             <h1 className="font-display" style={{
               margin: 0,
-              fontSize: 'clamp(96px, 19vw, 340px)',
-              lineHeight: 0.82,
-              textAlign: 'center',
-              letterSpacing: '-0.01em'
+              fontSize: 'clamp(30px, 5vw, 68px)',
+              lineHeight: 0.96,
+              letterSpacing: '-0.005em',
+              textWrap: 'balance',
+              maxWidth: 18 + 'ch'
             }}>
-              {/* headline is always "CANARY" in safe hero — the tweakable headline
-                  lives in the sub-tagline slot so it stays typographically honest */}
-              CANARY
+              The Limited-Run Keyboard Built to Transform Your Desk
             </h1>
           </Reveal>
 
-          {/* Tagline / tweakable headline */}
-          <div style={{ textAlign: 'center' }}>
-            <Reveal delay={120}>
-              <div className="font-mono uppercase" style={{
-                fontSize: 'clamp(11px, 1.3vw, 14px)',
-                letterSpacing: '0.32em',
-                marginBottom: 18,
-                opacity: 0.9
-              }}>
-                {tweaks.headline || 'Instruments for the modern desk.'}
-              </div>
-            </Reveal>
+          <Reveal delay={180}>
+            <p style={{
+              margin: 0, maxWidth: 680, fontSize: 'clamp(14px, 1.5vw, 16px)', lineHeight: 1.6
+            }}>
+              Canary C01 is a 65% die-cast aluminum mechanical keyboard with premium sound,
+              tri-mode wireless, PBT keycaps, and three collectible colorways: Signal, Recon, and Strike.
+            </p>
+          </Reveal>
 
-            <Reveal delay={200}>
-              <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
-                <div className="font-mono uppercase" style={{ fontSize: 9, letterSpacing: '0.28em', opacity: 0.45 }}>
-                  Click to watch
-                </div>
-                <button
-                  onClick={() => {
-                    const ev = new CustomEvent('canary:play-film');
-                    window.dispatchEvent(ev);
-                  }}
-                  aria-label="Watch the Canary film"
-                  style={{
-                    background: 'transparent', border: 0, cursor: 'pointer', padding: 8
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.transform = 'scale(0.93)'; e.currentTarget.style.filter = 'drop-shadow(0 6px 16px rgba(0,0,0,0.2))'; }}
-                  onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.filter = 'none'; }}
-                >
-                  <img src="assets/canary-bug.png" alt="" style={{ height: 64, width: 'auto', transition: 'transform 0.2s ease' }} />
-                </button>
-              </div>
-            </Reveal>
-          </div>
+          <Reveal delay={240}>
+            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center' }}>
+              <a
+                href="#capture"
+                onClick={heroCta}
+                className="font-mono uppercase"
+                style={{
+                  display: 'inline-flex', alignItems: 'center',
+                  padding: '16px 26px',
+                  border: '1px solid var(--ink)',
+                  background: 'var(--ink)', color: 'var(--canary)',
+                  fontSize: 11, letterSpacing: '0.22em'
+                }}
+              >Join The Flock</a>
+              <a
+                href="#specs"
+                onClick={secondaryCta}
+                className="font-mono uppercase"
+                style={{
+                  display: 'inline-flex', alignItems: 'center',
+                  padding: '16px 26px',
+                  border: '1px solid var(--ink)',
+                  background: 'transparent', color: 'var(--ink)',
+                  fontSize: 11, letterSpacing: '0.22em'
+                }}
+              >Explore Capsule 01</a>
+            </div>
+          </Reveal>
+
+          <Reveal delay={300}>
+            <p className="font-mono uppercase" style={{
+              margin: 0, fontSize: 10, letterSpacing: '0.22em', opacity: 0.6
+            }}>
+              600 total units · 200 per colorway · numbered 001–200
+            </p>
+          </Reveal>
         </div>
 
         {/* Bottom utility strip */}
-        <Reveal delay={260}>
+        <Reveal delay={340}>
           <div style={{
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
             fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase', opacity: 0.55

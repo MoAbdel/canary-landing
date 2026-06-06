@@ -8,7 +8,7 @@ function useTweaks() {
   const [t, setT] = useState(() => (window.CanaryTweaks ? window.CanaryTweaks.get() : {
     direction: "safe", headline: "Instruments for the modern desk.",
     dropDateISO: "", countdown: "off", palette: "canary",
-    sectionOrder: ["hero", "manifesto", "system", "capture", "community"]
+    sectionOrder: ["hero", "manifesto", "scarcity", "colorways", "setup", "build", "specs", "faq", "capture"]
   }));
   useEffect(() => {
     const onChange = (e) => setT(e.detail);
@@ -215,13 +215,52 @@ function FilmGateway({ compact = false }) {
 
 /* ------------------------------------------------------------------ */
 /* Signup form — POSTs to /api/subscribe                               */
+/* Captures qualified launch intent: email + colorway + use case +     */
+/* optional social handle. Colorway can be pre-filled by colorway cards */
+/* via the `canary:select-colorway` event.                             */
 /* ------------------------------------------------------------------ */
-function SignupForm({ variant = 'light', source = 'capture' }) {
+const COLORWAY_OPTIONS = ['Signal', 'Recon', 'Strike', 'Not sure yet'];
+const USE_CASE_OPTIONS = ['Desk setup', 'Gaming', 'Work/productivity', 'Streaming/creator setup', 'Collecting'];
+
+function SignupForm({ variant = 'light', source = 'capture', cta = 'Join The Flock' }) {
   const [email, setEmail] = useState('');
+  const [colorway, setColorway] = useState('');
+  const [useCase, setUseCase] = useState('');
+  const [social, setSocial] = useState('');
   const [company, setCompany] = useState(''); // honeypot — keep empty
   const [status, setStatus] = useState('idle'); // idle | loading | ok | err
   const [errMsg, setErrMsg] = useState('');
   const dark = variant === 'dark';
+  const wrapRef = useRef(null);
+  const lineColor = dark ? 'var(--canary)' : 'var(--ink)';
+
+  // Pre-fill colorway when a colorway card dispatches a selection.
+  useEffect(() => {
+    const onPick = (e) => {
+      const c = e.detail && e.detail.colorway;
+      if (!c) return;
+      setColorway(COLORWAY_OPTIONS.includes(c) ? c : 'Not sure yet');
+      if (status === 'err') { setStatus('idle'); setErrMsg(''); }
+    };
+    window.addEventListener('canary:select-colorway', onPick);
+    return () => window.removeEventListener('canary:select-colorway', onPick);
+  }, [status]);
+
+  // Fire waitlist_view once when the form scrolls into view.
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const obs = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          if (window.canaryTrack) window.canaryTrack('waitlist_view', { source });
+          obs.disconnect();
+        }
+      }
+    }, { threshold: 0.4 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [source]);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -234,20 +273,16 @@ function SignupForm({ variant = 'light', source = 'capture' }) {
       const resp = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: trimmed, company, source })
+        body: JSON.stringify({ email: trimmed, company, source, colorway, useCase, social: social.trim() })
       });
       const data = await resp.json().catch(() => ({}));
       if (!resp.ok || !data.ok) {
         setStatus('err'); setErrMsg('Something went wrong. Try again.'); return;
       }
       setStatus('ok');
-      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-        window.gtag('event', 'generate_lead', {
-          method: 'notify_list',
-          source,
-          value: 1,
-          currency: 'USD'
-        });
+      if (window.canaryTrack) {
+        window.canaryTrack('waitlist_submit', { source, colorway: colorway || 'unspecified', use_case: useCase || 'unspecified' });
+        window.canaryTrack('generate_lead', { method: 'the_flock', source, value: 1, currency: 'USD' });
       }
     } catch (err) {
       setStatus('err'); setErrMsg('Network error. Try again.');
@@ -256,29 +291,44 @@ function SignupForm({ variant = 'light', source = 'capture' }) {
 
   if (status === 'ok') {
     return (
-      <div style={{
-        border: `1px solid ${dark ? 'var(--canary)' : 'var(--ink)'}`,
+      <div ref={wrapRef} style={{
+        border: `1px solid ${lineColor}`,
         padding: '18px 20px',
         display: 'flex', flexDirection: 'column', gap: 6
       }}>
-        <MonoLabel style={{ opacity: 0.6 }}>Confirmed · 001/200</MonoLabel>
+        <MonoLabel style={{ opacity: 0.6 }}>Confirmed · The Flock</MonoLabel>
         <div className="font-display" style={{ fontSize: 36, lineHeight: 0.95 }}>
-          YOU'RE ON THE LIST.
+          YOU'RE IN THE FLOCK.
         </div>
         <div style={{ fontSize: 13, opacity: 0.75 }}>
-          The Flock gets first access. Check {email} for a confirmation.
+          Capsule 01 details will arrive before the public drop. Watch {email}.
         </div>
       </div>
     );
   }
 
   const busy = status === 'loading';
+  const fieldStyle = {
+    width: '100%',
+    border: `1px solid ${lineColor}`,
+    background: 'transparent',
+    color: 'inherit',
+    padding: '13px 14px',
+    fontFamily: 'Space Mono, monospace',
+    fontSize: 13,
+    appearance: 'none',
+    WebkitAppearance: 'none'
+  };
+  // Native option popups are OS-themed (usually white); force dark text so the
+  // dropdown stays legible even when the form sits on a dark section.
+  const optionStyle = { color: '#111111', background: '#ffffff' };
 
   return (
-    <form onSubmit={submit} noValidate style={{ width: '100%' }} aria-describedby="signup-msg">
+    <form ref={wrapRef} onSubmit={submit} noValidate style={{ width: '100%' }} aria-describedby="signup-msg">
+      {/* Email + primary CTA */}
       <div style={{
         display: 'flex',
-        border: `1px solid ${dark ? 'var(--canary)' : 'var(--ink)'}`,
+        border: `1px solid ${lineColor}`,
         background: 'transparent'
       }}>
         <input
@@ -320,23 +370,68 @@ function SignupForm({ variant = 'light', source = 'capture' }) {
           className="font-mono uppercase"
           style={{
             border: 0,
-            borderLeft: `1px solid ${dark ? 'var(--canary)' : 'var(--ink)'}`,
+            borderLeft: `1px solid ${lineColor}`,
             background: dark ? 'var(--canary)' : 'var(--ink)',
             color: dark ? 'var(--ink)' : 'var(--canary)',
             padding: '0 22px',
             fontSize: 11,
             letterSpacing: '0.22em',
             cursor: busy ? 'wait' : 'pointer',
-            opacity: busy ? 0.7 : 1
+            opacity: busy ? 0.7 : 1,
+            whiteSpace: 'nowrap'
           }}
-        >{busy ? 'Sending…' : 'Notify me'}</button>
+        >{busy ? 'Sending…' : cta}</button>
       </div>
-      <div id="signup-msg" style={{ marginTop: 10, display: 'flex', justifyContent: 'space-between', fontSize: 11, opacity: 0.7 }}>
-        <span>The Flock gets first access.</span>
+
+      {/* Qualifying fields */}
+      <div style={{ marginTop: 12, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12 }}>
+        <label style={{ display: 'block' }}>
+          <span className="font-mono uppercase" style={{ display: 'block', fontSize: 9, letterSpacing: '0.2em', opacity: 0.6, marginBottom: 6 }}>Preferred colorway</span>
+          <select
+            value={colorway}
+            disabled={busy}
+            aria-label="Preferred colorway"
+            onChange={(e) => { setColorway(e.target.value); if (window.canaryTrack && e.target.value) window.canaryTrack('colorway_select', { colorway: e.target.value, source }); }}
+            style={fieldStyle}
+          >
+            <option value="" style={optionStyle}>Choose (optional)</option>
+            {COLORWAY_OPTIONS.map((c) => <option key={c} value={c} style={optionStyle}>{c}</option>)}
+          </select>
+        </label>
+        <label style={{ display: 'block' }}>
+          <span className="font-mono uppercase" style={{ display: 'block', fontSize: 9, letterSpacing: '0.2em', opacity: 0.6, marginBottom: 6 }}>Main use case</span>
+          <select
+            value={useCase}
+            disabled={busy}
+            aria-label="Main use case"
+            onChange={(e) => { setUseCase(e.target.value); if (window.canaryTrack && e.target.value) window.canaryTrack('use_case_select', { use_case: e.target.value, source }); }}
+            style={fieldStyle}
+          >
+            <option value="" style={optionStyle}>Choose (optional)</option>
+            {USE_CASE_OPTIONS.map((u) => <option key={u} value={u} style={optionStyle}>{u}</option>)}
+          </select>
+        </label>
+        <label style={{ display: 'block' }}>
+          <span className="font-mono uppercase" style={{ display: 'block', fontSize: 9, letterSpacing: '0.2em', opacity: 0.6, marginBottom: 6 }}>Instagram / TikTok</span>
+          <input
+            type="text"
+            value={social}
+            disabled={busy}
+            onChange={(e) => setSocial(e.target.value)}
+            placeholder="@handle (optional)"
+            aria-label="Instagram or TikTok handle"
+            autoComplete="off"
+            style={fieldStyle}
+          />
+        </label>
+      </div>
+
+      <div id="signup-msg" style={{ marginTop: 12, display: 'flex', justifyContent: 'space-between', gap: 12, fontSize: 11, opacity: 0.7 }}>
+        <span>The Flock gets the drop link, serial range, and previews first.</span>
         <span
           role={status === 'err' ? 'alert' : undefined}
           aria-live="polite"
-          style={{ color: status === 'err' ? 'inherit' : 'transparent' }}
+          style={{ color: status === 'err' ? 'inherit' : 'transparent', whiteSpace: 'nowrap' }}
         >
           {status === 'err' ? (errMsg || 'Check your email address.') : '—'}
         </span>

@@ -31,12 +31,17 @@ vercel.json             # Vercel config + security headers + cache rules
 api/
   subscribe.js          # POST endpoint for the notify form (stub)
 src/
-  app.jsx               # React entry — composes sections in order
-  components.jsx        # Reveal, Placeholder, FilmGateway, SignupForm, etc.
-  sections-shared.jsx   # Manifesto, System, Capture, Community, Footer
-  direction-safe.jsx    # Calm/typographic hero variant
+  app.jsx               # React entry — composes sections in canonical order
+  components.jsx        # Reveal, Placeholder, FilmGateway, SignupForm (email + colorway + use case + social)
+  sections-shared.jsx   # Manifesto, Scarcity, Colorways, Setup, Build, Specs, System, FAQ, Capture, Community, Footer
+  direction-safe.jsx    # Default conversion hero (eyebrow/H1/subhead/CTAs/scarcity) + film launcher
   direction-bold.jsx    # Drop-culture hero variant + ticker
-  tweaks-host.js        # Tweaks panel state (localStorage)
+  tweaks-host.js        # Tweaks panel state (localStorage) + window.canaryTrack analytics seam
+learn/
+  index.html            # /learn hub (CollectionPage + Breadcrumb schema)
+  what-is-a-65-keyboard.html              # flagship article (Article + FAQ + Breadcrumb schema)
+  aluminum-vs-plastic-mechanical-keyboards.html  # SCAFFOLD (noindex) — TODO: full article
+  best-keyboard-for-desk-setup.html              # SCAFFOLD (noindex) — TODO: full article
 assets/
   canary-bug.png        # bug logomark
   canary-wordmark.png   # full wordmark
@@ -59,9 +64,34 @@ location.reload();
 
 `git push` → Vercel auto-deploys. `vercel.json` controls headers, caching, and clean URLs. The current CSP is **report-only**; promote to enforcing after a few days of clean reports.
 
-## Known gaps (see audit dated 2026-05-20)
+## Canonical host
 
-- `SignupForm` posts to `/api/subscribe`, which currently only logs. Wire to a real ESP (Klaviyo / ConvertKit / Resend) in Phase 2.
+The site is canonicalised on **https://www.canary.store/** (canonical tag, OG, JSON-LD,
+sitemap, robots, llms.txt all use www). **ACTION REQUIRED in hosting:** confirm Vercel +
+DNS redirect the apex (`canary.store`) and `http://` variants → `https://www.canary.store/`
+so the canonical never points at a redirecting URL.
+
+## Analytics / tracking
+
+- `window.canaryTrack(name, params)` (in `src/tweaks-host.js`) is the single event seam.
+  It mirrors to `dataLayer` and calls `gtag('event', ...)`. Learn pages include a minimal inline copy.
+- Events wired: `waitlist_view`, `waitlist_submit`, `colorway_select`, `use_case_select`,
+  `hero_cta_click`, `secondary_cta_click`, `faq_expand`, `learn_page_click` (+ legacy `generate_lead`).
+- TODO: `outbound_social_click` fires once social links exist (see Footer TODO).
+- GA4 ships with **Consent Mode v2 default-denied**, so events buffer until a consent banner
+  grants `analytics_storage`. The banner is still TODO — analytics will be sparse until then.
+- TODO(pixels): Meta Pixel + TikTok Pixel destinations are stubbed inside `canaryTrack`.
+
+## Known gaps / launch TODOs
+
+- `SignupForm` posts `email`, `colorway`, `useCase`, `social` to `/api/subscribe`, which still only
+  logs. Wire to a real ESP (Klaviyo / ConvertKit / Resend) in Phase 2 and map the qualifying fields
+  to ESP custom properties / segments (see `api/subscribe.js`).
 - JSX is still transpiled in-browser. Replace with a real build (esbuild / Vite / Astro) in Phase 2.
+- Product schema ships **without an Offer** (price not final, range USD 175–225). Add an `Offer`
+  with a real `price` + `availability` once pricing is locked.
+- `/learn` has 1 flagship article + 2 noindex scaffolds. Finish the scaffolds (outlines + TODOs are
+  in each file), remove `noindex`, and add them to `sitemap.xml`.
 - No `/privacy` or `/terms` page yet.
 - Cookie consent banner not yet built; GA4 ships with consent default-denied.
+- Search Console + Bing Webmaster Tools verification not yet added (add verification meta/DNS).

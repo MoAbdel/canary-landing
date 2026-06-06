@@ -16,8 +16,9 @@ function Ticker({ children }) {
       maskImage: 'linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%)',
       WebkitMaskImage: 'linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%)'
     }}>
-      <div className="canary-ticker-track" style={{
+      <div style={{
         display: 'inline-flex', gap: 40,
+        animation: 'canary-ticker 42s linear infinite',
         paddingLeft: '100%'
       }}>
         {Array.from({ length: 2 }).map((_, k) => (
@@ -26,12 +27,7 @@ function Ticker({ children }) {
           </span>
         ))}
       </div>
-      <style>{`
-        @keyframes canary-ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        @media (prefers-reduced-motion: no-preference) {
-          .canary-ticker-track { animation: canary-ticker 42s linear infinite; }
-        }
-      `}</style>
+      <style>{`@keyframes canary-ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
     </div>
   );
 }
@@ -95,7 +91,7 @@ function HeroBold({ tweaks }) {
             </Reveal>
             <Reveal delay={80}>
               <div style={{ marginTop: 18, fontSize: 13, lineHeight: 1.7 }}>
-                A 65% die-cast aluminum keyboard. Three colorways. Two switches.
+                A 65% die-cast aluminum mechanical keyboard. Three colorways. Two switches.
                 Numbered 001–200 per colorway. One window.
               </div>
             </Reveal>
@@ -133,22 +129,19 @@ function HeroBold({ tweaks }) {
           <Reveal delay={160}>
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
               <FilmGateway />
-              <a href="#capture" className="font-mono uppercase" style={{
+              <a href="#capture" className="font-mono uppercase"
+                onClick={() => { if (window.canaryTrack) window.canaryTrack('hero_cta_click', { label: 'join_the_flock', location: 'hero_bold' }); }}
+                style={{
                 display: 'inline-flex', alignItems: 'center',
                 padding: '14px 22px',
                 border: '1px solid var(--ink)',
                 background: 'var(--ink)', color: 'var(--canary)',
                 fontSize: 11, letterSpacing: '0.22em', gap: 10
               }}>
-                <span className="canary-pulse-dot" style={{ width: 8, height: 8, background: 'var(--canary)', borderRadius: '50%', display: 'inline-block' }} />
+                <span style={{ width: 8, height: 8, background: 'var(--canary)', borderRadius: '50%', display: 'inline-block', animation: 'canary-pulse 1.6s ease-in-out infinite' }} />
                 Join The Flock
               </a>
-              <style>{`
-                @keyframes canary-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
-                @media (prefers-reduced-motion: no-preference) {
-                  .canary-pulse-dot { animation: canary-pulse 1.6s ease-in-out infinite; }
-                }
-              `}</style>
+              <style>{`@keyframes canary-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }`}</style>
             </div>
           </Reveal>
         </div>

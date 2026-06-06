@@ -1,45 +1,54 @@
 # Canary — https://www.canary.store/
-# Allow all major search and AI crawlers. The print variant is gated via its
-# own <meta name="robots" content="noindex,follow"> so the directive stays crawlable.
+# Allow all major search and AI crawlers; gate print variant.
 
 User-agent: *
 Allow: /
+Disallow: /canary-print.html
 Disallow: /api/
 
 User-agent: GPTBot
 Allow: /
+Disallow: /canary-print.html
 Disallow: /api/
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /canary-print.html
 Disallow: /api/
 
 User-agent: Claude-Web
 Allow: /
+Disallow: /canary-print.html
 Disallow: /api/
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /canary-print.html
 Disallow: /api/
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /canary-print.html
 Disallow: /api/
 
 User-agent: Applebot-Extended
 Allow: /
+Disallow: /canary-print.html
 Disallow: /api/
 
 User-agent: CCBot
 Allow: /
+Disallow: /canary-print.html
 Disallow: /api/
 
 User-agent: Bytespider
 Allow: /
+Disallow: /canary-print.html
 Disallow: /api/
 
 User-agent: cohere-ai
 Allow: /
+Disallow: /canary-print.html
 Disallow: /api/
 
 Sitemap: https://www.canary.store/sitemap.xml

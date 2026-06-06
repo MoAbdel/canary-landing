@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#FFFFFF" />
+<meta name="color-scheme" content="light" />
+
+<title>Learn — Canary Keyboard Guides</title>
+<meta name="description" content="Guides on mechanical keyboards from Canary: 65% layouts, aluminum vs plastic builds, and choosing the best keyboard for your desk setup." />
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
+<link rel="canonical" href="https://www.canary.store/learn" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Canary" />
+<meta property="og:title" content="Learn — Canary Keyboard Guides" />
+<meta property="og:description" content="Guides on mechanical keyboards from Canary: 65% layouts, aluminum vs plastic builds, and choosing the best keyboard for your desk setup." />
+<meta property="og:url" content="https://www.canary.store/learn" />
+<meta property="og:image" content="https://www.canary.store/assets/keyboards/c01-hero.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" type="image/png" href="/assets/canary-bug.png" />
+<link rel="apple-touch-icon" href="/assets/canary-bug.png" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L0LQLBJQ8E"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage: 'denied', analytics_storage: 'denied',
+    ad_user_data: 'denied', ad_personalization: 'denied',
+    functionality_storage: 'granted', security_storage: 'granted', wait_for_update: 500
+  });
+  gtag('js', new Date());
+  gtag('config', 'G-L0LQLBJQ8E', { anonymize_ip: true });
+  window.canaryTrack = function (name, params) {
+    (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: name }, params || {}));
+    if (typeof window.gtag === 'function') gtag('event', name, params || {});
+  };
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.canary.store/" },
+        { "@type": "ListItem", "position": 2, "name": "Learn", "item": "https://www.canary.store/learn" }
+      ]
+    },
+    {
+      "@type": "CollectionPage",
+      "name": "Learn — Canary Keyboard Guides",
+      "url": "https://www.canary.store/learn",
+      "inLanguage": "en-US",
+      "isPartOf": { "@type": "WebSite", "name": "Canary", "url": "https://www.canary.store/" }
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root { --ink:#111111; --canary:#FFFFFF; --paper:#F4F1EA; --ink-20:rgba(17,17,17,0.2); }
+  *,*::before,*::after { box-sizing:border-box; }
+  html,body { margin:0; background:var(--canary); color:var(--ink); -webkit-font-smoothing:antialiased; }
+  body { font-family:'Space Mono','Courier New',monospace; font-size:15px; line-height:1.7; }
+  img { display:block; max-width:100%; }
+  a { color:inherit; }
+  .font-display { font-family:'Anton',Impact,sans-serif; font-weight:400; }
+  .bar { display:flex; justify-content:space-between; align-items:center; padding:18px clamp(20px,5vw,48px); border-bottom:1px solid var(--ink); }
+  .lbl { font-size:10px; letter-spacing:0.24em; text-transform:uppercase; opacity:0.65; text-decoration:none; }
+  main { max-width:900px; margin:0 auto; padding:clamp(32px,6vw,72px) clamp(20px,5vw,32px) 80px; }
+  .crumbs { font-size:11px; letter-spacing:0.12em; text-transform:uppercase; opacity:0.6; margin-bottom:24px; }
+  .crumbs a { text-decoration:none; }
+  h1.font-display { font-size:clamp(40px,8vw,96px); line-height:0.92; margin:0 0 16px; }
+  .intro { max-width:620px; margin:0 0 44px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; }
+  .card { border:1px solid var(--ink); padding:24px; display:flex; flex-direction:column; gap:10px; text-decoration:none; min-height:180px; transition:background .15s ease,color .15s ease; }
+  .card:hover { background:var(--ink); color:var(--canary); }
+  .card .tag { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.6; }
+  .card h2 { font-family:'Anton',Impact,sans-serif; font-weight:400; font-size:24px; line-height:1.02; margin:0; }
+  .card p { margin:0; font-size:13px; opacity:0.8; flex:1; }
+  .card .go { font-size:11px; letter-spacing:0.18em; text-transform:uppercase; }
+  .card.soon { opacity:0.7; }
+  .endcard { margin-top:44px; padding:28px; border:1px solid var(--ink); background:var(--paper); }
+  .cta { display:inline-flex; align-items:center; padding:15px 24px; border:1px solid var(--ink); background:var(--ink); color:var(--canary); text-decoration:none; font-size:11px; letter-spacing:0.22em; text-transform:uppercase; }
+  footer { border-top:1px solid var(--ink); padding:20px clamp(20px,5vw,48px); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.55; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <a href="/" aria-label="Canary home"><img src="/assets/canary-bug.png" alt="Canary" style="height:22px;width:auto" /></a>
+  <span class="lbl">Learn</span>
+  <a href="/#capture" class="lbl">Join The Flock →</a>
+</div>
+
+<main>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Learn</span></nav>
+  <h1 class="font-display">LEARN</h1>
+  <p class="intro">
+    Straight answers on mechanical keyboards — layouts, materials, and what actually matters when
+    you're choosing a board for your desk setup. From the makers of the
+    <a href="/" style="text-decoration:underline;text-underline-offset:3px">Canary C01</a>.
+  </p>
+
+  <div class="grid">
+    <a class="card" href="/learn/what-is-a-65-keyboard">
+      <span class="tag">Layouts</span>
+      <h2>What Is a 65% Keyboard?</h2>
+      <p>Layout, benefits, and who a compact 65% board is for — with a size-by-size comparison.</p>
+      <span class="go">Read →</span>
+    </a>
+    <a class="card soon" href="/learn/aluminum-vs-plastic-mechanical-keyboards">
+      <span class="tag">Materials · Coming soon</span>
+      <h2>Aluminum vs Plastic Keyboards</h2>
+      <p>How case material changes sound, feel, weight, and price on a mechanical keyboard.</p>
+      <span class="go">Preview →</span>
+    </a>
+    <a class="card soon" href="/learn/best-keyboard-for-desk-setup">
+      <span class="tag">Setups · Coming soon</span>
+      <h2>Best Keyboard for Desk Setups</h2>
+      <p>What to look for before you buy if the keyboard is the centerpiece of your setup.</p>
+      <span class="go">Preview →</span>
+    </a>
+  </div>
+
+  <div class="endcard">
+    <p style="margin:0 0 8px;font-family:'Anton',Impact,sans-serif;font-size:26px;line-height:1">CAPSULE 01 IS A LIMITED, NUMBERED DROP.</p>
+    <p style="margin:0 0 16px;font-size:14px">600 units across Signal, Recon, and Strike. No restocks. The Flock gets first access.</p>
+    <a class="cta" href="/#capture" onclick="window.canaryTrack&&window.canaryTrack('hero_cta_click',{label:'join_the_flock',location:'learn_hub'})">Join The Flock</a>
+  </div>
+</main>
+
+<footer>
+  <span>© 2026 Canary</span>
+  <span>C01 · Capsule 01</span>
+  <a href="/" style="text-decoration:none">Home ↑</a>
+</footer>
+
+</body>
+</html>

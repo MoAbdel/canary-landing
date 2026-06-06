@@ -52,6 +52,15 @@ module.exports = async (req, res) => {
   const source = (body.source || 'unknown').slice(0, 64);
   const honeypot = body.company; // bot trap; real users won't fill this
 
+  // Qualifying fields — optional. Validate against known values where applicable;
+  // store free-text fields bounded. These map to ESP custom fields / segments in
+  // Phase 2 (e.g. Klaviyo properties: Preferred Colorway, Use Case, Social).
+  const COLORWAYS = ['Signal', 'Recon', 'Strike', 'Not sure yet'];
+  const USE_CASES = ['Desk setup', 'Gaming', 'Work/productivity', 'Streaming/creator setup', 'Collecting'];
+  const colorway = COLORWAYS.includes(body.colorway) ? body.colorway : '';
+  const useCase = USE_CASES.includes(body.useCase) ? body.useCase : '';
+  const social = (typeof body.social === 'string' ? body.social : '').trim().slice(0, 64);
+
   if (honeypot) {
     // pretend success so bots don't iterate
     res.status(200).json({ ok: true });
@@ -69,6 +78,9 @@ module.exports = async (req, res) => {
     ts: new Date().toISOString(),
     email,
     source,
+    colorway,
+    useCase,
+    social,
     ua: req.headers['user-agent'] || '',
     ip: req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || '',
     referer: req.headers.referer || '',

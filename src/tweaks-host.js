@@ -1,3 +1,23 @@
+// ---------------------------------------------------------------------------
+// canaryTrack — single analytics seam for the whole site (React + learn pages).
+// Pushes a GA4 event via gtag when present; always mirrors to dataLayer and a
+// debug ring buffer so events are inspectable before GA/pixels are fully wired.
+// Wire additional destinations (Meta Pixel, TikTok Pixel) inside here later.
+// ---------------------------------------------------------------------------
+(function () {
+  window.canaryEvents = window.canaryEvents || [];
+  window.canaryTrack = function (name, params) {
+    const payload = Object.assign({ event: name }, params || {});
+    try { window.canaryEvents.push(payload); } catch (e) {}
+    try { (window.dataLayer = window.dataLayer || []).push(payload); } catch (e) {}
+    if (typeof window.gtag === 'function') {
+      try { window.gtag('event', name, params || {}); } catch (e) {}
+    }
+    // TODO(pixels): forward to Meta Pixel (fbq) and TikTok Pixel (ttq) here once
+    // their IDs are provisioned via env/config and consent is granted.
+  };
+})();
+
 // Tweaks host — stores state in localStorage, broadcasts to React, also
 // persists to the EDITMODE block when running inside the design host.
 (function () {
@@ -9,15 +29,20 @@
     "dropDateISO": "",
     "countdown": "off",
     "palette": "canary",
-    "sectionOrder": ["hero", "manifesto", "system", "capture", "community"]
+    "sectionOrder": ["hero", "manifesto", "scarcity", "colorways", "setup", "build", "specs", "faq", "capture"]
   }/*EDITMODE-END*/;
 
   const SECTION_LABELS = {
     hero: "Hero / Film",
     manifesto: "Manifesto",
+    scarcity: "Drop scarcity",
+    colorways: "Colorways",
+    setup: "Built for the Setup",
+    build: "Built for the Build",
+    specs: "Specs",
+    faq: "FAQ",
     system: "The System",
-    capture: "Email capture",
-    community: "Community"
+    capture: "Email capture"
   };
 
   // --- state ----------------------------------------------------------------
