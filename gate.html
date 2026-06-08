@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0D0D0E" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Canary — Private</title>
+<link rel="icon" type="image/png" href="/assets/canary-bug.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0D0D0E; --panel:#141416; --hairline:rgba(255,255,255,0.10);
+    --yellow:#EFCE1A; --yellow-hi:#F7DA2E;
+    --on-dark:#F3F1EC; --on-dark-55:rgba(243,241,236,0.55); --on-dark-40:rgba(243,241,236,0.40);
+    --ff-display:'Anton','Arial Narrow',Impact,sans-serif;
+    --ff-mono:'Space Mono',ui-monospace,'Courier New',monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0; background:var(--black); color:var(--on-dark);
+    font-family:var(--ff-mono);
+    display:flex; align-items:center; justify-content:center;
+    min-height:100svh; padding:24px;
+    background-image:radial-gradient(1100px 600px at 50% -10%, rgba(239,206,26,0.10), transparent 60%);
+  }
+  .gate{ width:100%; max-width:420px; text-align:center; }
+  /* Wordmark PNG is dark charcoal; the site inverts it to white on dark backgrounds. */
+  .wordmark{ height:26px; width:auto; margin:0 auto 34px; display:block; filter:invert(1) brightness(1.9); }
+  .eyebrow{
+    font-size:10px; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--yellow); margin:0 0 14px;
+  }
+  h1{
+    font-family:var(--ff-display); font-weight:400; text-transform:uppercase;
+    font-size:clamp(30px,8vw,42px); line-height:.98; letter-spacing:.01em; margin:0 0 12px;
+  }
+  .sub{ color:var(--on-dark-55); font-size:13.5px; line-height:1.5; margin:0 0 30px; }
+  form{ width:100%; }
+  .row{
+    display:flex; border:1px solid rgba(243,241,236,0.30); border-radius:999px;
+    overflow:hidden; background:rgba(255,255,255,0.03); transition:border-color .2s ease;
+  }
+  .row:focus-within{ border-color:var(--yellow); }
+  .row input{
+    flex:1; min-width:0; border:0; background:transparent; color:var(--on-dark);
+    font-family:var(--ff-mono); font-size:14px; padding:15px 20px; outline:0; letter-spacing:.02em;
+  }
+  .row input::placeholder{ color:var(--on-dark-40); }
+  .row button{
+    border:0; background:var(--yellow); color:#111213; padding:0 26px;
+    font-family:var(--ff-mono); font-weight:700; font-size:12px; letter-spacing:.14em;
+    text-transform:uppercase; display:inline-flex; align-items:center; gap:8px;
+    transition:background .18s ease;
+  }
+  .row button:hover{ background:var(--yellow-hi); }
+  .row button[disabled]{ opacity:.6; cursor:wait; }
+  .msg{ min-height:18px; margin-top:14px; font-size:11px; letter-spacing:.04em; color:var(--on-dark-40); }
+  .msg[data-state="err"]{ color:#ff8a6b; }
+  .foot{ margin-top:38px; font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--on-dark-40); }
+  @media (max-width:480px){
+    .row{ flex-direction:column; border-radius:16px; }
+    .row input{ text-align:center; border-bottom:1px solid rgba(243,241,236,0.18); }
+    .row button{ width:100%; justify-content:center; padding:15px; }
+  }
+</style>
+</head>
+<body>
+  <main class="gate">
+    <img class="wordmark" src="/assets/canary-wordmark.png" alt="Canary" width="160" height="26" />
+    <p class="eyebrow">Private · Capsule Access</p>
+    <h1>Members Only</h1>
+    <p class="sub">This page is private. Enter the password to continue.</p>
+    <form id="gate-form" novalidate>
+      <div class="row">
+        <label for="pw" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Password</label>
+        <input id="pw" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required autofocus />
+        <button type="submit">Enter <span aria-hidden="true">→</span></button>
+      </div>
+      <p class="msg" id="msg" role="status" aria-live="polite"></p>
+    </form>
+    <p class="foot">Canary · Capsule 01</p>
+  </main>
+  <script>
+    var form = document.getElementById('gate-form');
+    var pw   = document.getElementById('pw');
+    var msg  = document.getElementById('msg');
+    var btn  = form.querySelector('button');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var password = pw.value;
+      if (!password) { return; }
+      msg.removeAttribute('data-state'); msg.textContent = 'Checking…';
+      btn.disabled = true;
+      fetch('/api/gate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: password })
+      }).then(function (r) {
+        if (r.ok) {
+          msg.textContent = 'Welcome.';
+          window.location.href = '/';
+          return;
+        }
+        msg.setAttribute('data-state', 'err');
+        msg.textContent = 'Incorrect password.';
+        btn.disabled = false;
+        pw.value = ''; pw.focus();
+      }).catch(function () {
+        msg.setAttribute('data-state', 'err');
+        msg.textContent = 'Something went wrong. Try again.';
+        btn.disabled = false;
+      });
+    });
+  </script>
+</body>
+</html>
