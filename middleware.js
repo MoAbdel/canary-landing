@@ -18,7 +18,11 @@ export const config = {
 };
 
 // Paths reachable WITHOUT a password (the gate page + its assets + the verifier).
+// NOTE: vercel.json has cleanUrls:true, so the gate page's canonical path is
+// "/gate" (Vercel 308-redirects "/gate.html" -> "/gate"). Both are allowlisted
+// and we redirect to "/gate" to avoid a /gate <-> /gate.html redirect loop.
 const PUBLIC_PATHS = new Set([
+  '/gate',
   '/gate.html',
   '/api/gate',
   '/assets/canary-wordmark.png',
@@ -45,8 +49,8 @@ export default function middleware(request) {
   // Authenticated: cookie present and equal to the server secret.
   if (match && match[1] === token) return;
 
-  // Not authenticated → send them to the gate.
-  url.pathname = '/gate.html';
+  // Not authenticated → send them to the gate (clean URL; see PUBLIC_PATHS note).
+  url.pathname = '/gate';
   url.search = '';
   return Response.redirect(url, 302);
 }
