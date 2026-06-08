@@ -102,7 +102,7 @@ function HeroSafe({ tweaks }) {
                   background: 'var(--ink)', color: 'var(--canary)',
                   fontSize: 11, letterSpacing: '0.22em'
                 }}
-              >Join The Flock</a>
+              >Join the Early Birds</a>
               <a
                 href="#specs"
                 onClick={secondaryCta}

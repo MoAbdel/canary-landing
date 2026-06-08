@@ -139,7 +139,7 @@ function HeroBold({ tweaks }) {
                 fontSize: 11, letterSpacing: '0.22em', gap: 10
               }}>
                 <span style={{ width: 8, height: 8, background: 'var(--canary)', borderRadius: '50%', display: 'inline-block', animation: 'canary-pulse 1.6s ease-in-out infinite' }} />
-                Join The Flock
+                Join the Early Birds
               </a>
               <style>{`@keyframes canary-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }`}</style>
             </div>

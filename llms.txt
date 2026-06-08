@@ -18,7 +18,7 @@ The Canary C01 is the first object in the Canary system.
 
 ## How to buy
 
-Canary releases capsules in a single time-boxed window. There is no continuous availability — when a capsule sells out, it does not return. Customers join "The Flock" (Canary's notify list) to receive the drop time, product link, and serial range before public release.
+Canary releases capsules in a single time-boxed window. There is no continuous availability — when a capsule sells out, it does not return. Customers join the "Early Birds" (Canary's notify list) to receive the drop time, product link, and serial range before public release.
 
 - Notify list signup: https://www.canary.store/#capture
 - Drop status: see homepage hero ("Drop · TBA" or live countdown)
@@ -53,7 +53,7 @@ Yes — tri-mode: USB-C wired, 2.4 GHz wireless via dongle, and Bluetooth.
 No. Canary capsules are single-window releases. When Capsule 01 sells out, the C01 will not be reissued in the same form.
 
 **When does the Canary C01 drop?**
-Drop date is announced to The Flock (the Canary notify list) before public release. Current status is shown on the homepage hero.
+Drop date is announced to the Early Birds (the Canary notify list) before public release. Current status is shown on the homepage hero.
 
 **How much does the Canary C01 cost?**
 USD 175 to 225 depending on configuration. Final pricing is confirmed at drop.

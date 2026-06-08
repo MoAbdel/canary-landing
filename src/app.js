@@ -285,8 +285,8 @@
           box.className = 'flock-success';
           box.setAttribute('role', 'status');
           box.innerHTML =
-            '<div class="fs-label">Confirmed · The Flock</div>' +
-            '<h3>You’re in the flock.</h3>' +
+            '<div class="fs-label">Confirmed · Early Birds</div>' +
+            '<h3>You’re an Early Bird.</h3>' +
             '<p>Capsule 01 details arrive before the public drop. Watch ' + escapeHtml(email) + '.</p>';
           if (rowEl) rowEl.replaceWith(box);
           if (microEl) microEl.remove();

@@ -213,7 +213,7 @@ function SectionSystem({ direction }) {
               border: '1px solid var(--ink)',
               background: 'var(--ink)', color: 'var(--canary)',
               fontSize: 11, letterSpacing: '0.22em'
-            }}>Join The Flock</a>
+            }}>Join the Early Birds</a>
           </div>
         </Reveal>
       </div>
@@ -246,7 +246,7 @@ function SectionCapture({ tweaks }) {
             fontSize: 'clamp(40px, 7vw, 116px)',
             lineHeight: 0.92,
           }}>
-            JOIN THE FLOCK BEFORE
+            JOIN THE EARLY BIRDS BEFORE
             <br />
             CAPSULE 01 OPENS.
           </h2>
@@ -257,7 +257,7 @@ function SectionCapture({ tweaks }) {
             maxWidth: 620, marginTop: 'clamp(20px, 3vw, 32px)',
             fontSize: 15, lineHeight: 1.65, opacity: 0.85
           }}>
-            The Flock gets the drop time, early link, serial range, colorway previews, sound tests,
+            Early Birds get the drop time, early link, serial range, colorway previews, sound tests,
             and launch details before public release.
           </p>
         </Reveal>
@@ -336,7 +336,7 @@ function SectionScarcity() {
     'Each colorway numbered 001–200.',
     'One release window.',
     'No restocks — when a serial range closes, it stays closed.',
-    'The Flock gets first access.',
+    'Early Birds get first access.',
   ];
   return (
     <section id="capsule" style={{ background: '#FFFFFF', color: 'var(--ink)', borderTop: '1px solid var(--ink)' }}>
@@ -618,7 +618,7 @@ function SectionSpecs() {
 /* ------------------------------------------------------------------ */
 const FAQ_ITEMS = [
   ['What is the Canary C01?', 'Canary C01 is a limited-run 65% die-cast aluminum mechanical keyboard with 68 keys, tri-mode wireless, and three-color PBT keycaps. It is the hero product of Capsule 01.'],
-  ['When does Canary C01 launch?', 'Canary C01 launches as Capsule 01 in a single release window. The exact drop date is announced to The Flock, the Canary waitlist, before the public release.'],
+  ['When does Canary C01 launch?', 'Canary C01 launches as Capsule 01 in a single release window. The exact drop date is announced to the Early Birds, the Canary waitlist, before the public release.'],
   ['How many Canary C01 units are being made?', '600 total units across three colorways: 200 each of Signal, Recon, and Strike, numbered 001 to 200 within each colorway.'],
   ['Will Capsule 01 restock?', 'No. Capsule 01 is a single numbered drop with no restocks. Once a colorway\'s serial range is gone, it is closed.'],
   ['What are Signal, Recon, and Strike?', 'They are the three Canary C01 colorways. Signal is clean and high-contrast, Recon is dark and stealth-inspired, and Strike is a bold statement colorway built for camera-facing setups.'],
@@ -630,8 +630,8 @@ const FAQ_ITEMS = [
   ['Is Canary C01 good for gaming?', 'Yes. The compact 65% layout frees up desk and mouse space, and tri-mode connectivity with low-latency 2.4 GHz wireless suits gaming and stream desks.'],
   ['Is Canary C01 good for work and productivity?', 'Yes. The 65% layout, premium quiet build, and tri-mode wireless make Canary C01 well suited to work-from-home desks, writing, and focused work sessions.'],
   ['Is Canary C01 good for desk setups?', 'Yes. Canary C01 is built as the centerpiece of a setup: aluminum presence, three collectible colorways, and a compact footprint designed to photograph well.'],
-  ['How do I join The Flock?', 'Add your email to the Canary waitlist on this page. The Flock gets the drop time, early link, serial range, and colorway previews before the public release.'],
-  ['Will Canary release keycaps or creator capsules?', 'Future capsules and accessories are planned. Join The Flock to hear about new colorways, keycaps, and creator releases first.'],
+  ['How do I join the Early Birds?', 'Add your email to the Canary waitlist on this page. Early Birds get the drop time, early link, serial range, and colorway previews before the public release.'],
+  ['Will Canary release keycaps or creator capsules?', 'Future capsules and accessories are planned. Join the Early Birds to hear about new colorways, keycaps, and creator releases first.'],
 ];
 
 function SectionFAQ() {
@@ -707,7 +707,7 @@ function Footer() {
         <div>
           <MonoLabel style={{ opacity: 0.55 }}>Notify list</MonoLabel>
           <div style={{ marginTop: 10, fontSize: 13, lineHeight: 1.8 }}>
-            <a href="#capture">Join The Flock</a><br />
+            <a href="#capture">Join the Early Birds</a><br />
             {/* TODO(social): when IG/TikTok/Discord launch, add links here and fire
                 canaryTrack('outbound_social_click', { network }) on click. */}
             <span style={{ opacity: 0.55 }}>Social channels at drop</span>

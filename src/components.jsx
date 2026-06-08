@@ -222,7 +222,7 @@ function FilmGateway({ compact = false }) {
 const COLORWAY_OPTIONS = ['Signal', 'Recon', 'Strike', 'Not sure yet'];
 const USE_CASE_OPTIONS = ['Desk setup', 'Gaming', 'Work/productivity', 'Streaming/creator setup', 'Collecting'];
 
-function SignupForm({ variant = 'light', source = 'capture', cta = 'Join The Flock' }) {
+function SignupForm({ variant = 'light', source = 'capture', cta = 'Join the Early Birds' }) {
   const [email, setEmail] = useState('');
   const [colorway, setColorway] = useState('');
   const [useCase, setUseCase] = useState('');
@@ -296,9 +296,9 @@ function SignupForm({ variant = 'light', source = 'capture', cta = 'Join The Flo
         padding: '18px 20px',
         display: 'flex', flexDirection: 'column', gap: 6
       }}>
-        <MonoLabel style={{ opacity: 0.6 }}>Confirmed · The Flock</MonoLabel>
+        <MonoLabel style={{ opacity: 0.6 }}>Confirmed · Early Birds</MonoLabel>
         <div className="font-display" style={{ fontSize: 36, lineHeight: 0.95 }}>
-          YOU'RE IN THE FLOCK.
+          YOU'RE AN EARLY BIRD.
         </div>
         <div style={{ fontSize: 13, opacity: 0.75 }}>
           Capsule 01 details will arrive before the public drop. Watch {email}.
@@ -427,7 +427,7 @@ function SignupForm({ variant = 'light', source = 'capture', cta = 'Join The Flo
       </div>
 
       <div id="signup-msg" style={{ marginTop: 12, display: 'flex', justifyContent: 'space-between', gap: 12, fontSize: 11, opacity: 0.7 }}>
-        <span>The Flock gets the drop link, serial range, and previews first.</span>
+        <span>Early Birds get the drop link, serial range, and previews first.</span>
         <span
           role={status === 'err' ? 'alert' : undefined}
           aria-live="polite"
